@@ -1,0 +1,17 @@
+﻿course_lms_id,course_code,competency_type,competency_name,description
+118,BUS500,Competency,BUS500 - Data Analysis_1.0 Terminology,"Define web, programming, and database terminology used in data analysis and apply basic computing skills (i.e., Uploading, downloading, importing, exporting, and troubleshooting software)."
+118,BUS500,Competency,BUS500 - Data Analysis_2.0 Spreadsheets,"Apply data in spreadsheets to enter, format, clean, and prepare data for analysis."
+118,BUS500,Competency,BUS500 - Data Analysis_3.0 Basic SQL Queries,Basic SQL Queries: Apply basic SQL queries by manipulating and modifying them to change the visual output of data.
+118,BUS500,Competency,BUS500 - Data Analysis_4.0 Professional Presentation Skills,Present data findings using various data visualization techniques. Analyze data sets to determine the domain context and evaluate the viability of the data for the associated project.
+118,BUS500,Competency,BUS500 - Data Analysis_5.0 Research,Explain how research projects are designed and supported through the incorporation of data. Use data storytelling and visualization to inform decision-making.
+118,BUS500,Competency,BUS500 - Data Analysis_6.0 Data Validity,Evaluate data sets to determine the domain context and validity of the data set for a given project. 
+118,BUS500,Competency,BUS500 - Data Analysis_7.0 Foundational Mathematical Principles,"Identify patterns within a data set, including basic mathematical concepts such as mean, median, mode, linear, and nonlinear."
+119,BUS501,Competency,BUS501 - Data Analysis_8.0 Intermediate SQL Queries,"Create SQL queries to access and retrieve data, interpret results, and create a visual to tell a story. "
+119,BUS501,Competency,BUS501 - Data Analysis_9.0 Data Presentation Skills,Present the interpretation of data findings from a real-world project to inform decision-making.
+119,BUS501,Competency,BUS501 - Data Analysis_10.0 Data Ethics,"Identify sensitive data sets, including identity, access, users, and roles."
+119,BUS501,Competency,BUS501 - Data Analysis_11.0 Professional Learning,"Ability to identify, access, and apply resources within the field to troubleshoot and explore new technologies."
+119,BUS501,Durable Skill,BUS501 - Data Analysis_12.0 Durable Skills: Metacognition,
+118,BUS500,Final Grade,BUS500 - Data Analysis_Final Grade,
+119,BUS501,Final Grade,BUS501 - Data Analysis_Final Grade,
+118,BUS500,Observable Skill,BUS500 - Data Analysis_Observable Skills,
+119,BUS501,Observable Skill,BUS501 - Data Analysis_Observable Skills,

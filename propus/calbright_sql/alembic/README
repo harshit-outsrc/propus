@@ -1,0 +1,93 @@
+Generic single-database configuration.
+
+# Calbright Alembic Migrations
+
+## Initial Migration Run for Head
+1. For initial state of the migration, you will need to run `alembic upgrade head` to make sure that the head is set and any further migration revision calls are working off the set head
+
+## Creating a Migration files
+1. First make adjustments to databse (tables, triggers, extensions, trigger_functions, etc...)
+    In SQL directory:
+    -   db_extensions: Extensions to apply to a schema and will automatically generate in alembic migrations if PGExtension function is leveraged from alembic_util. 
+    -   trigger_functions: Functions that will be called from the triggers or other procedures. Note: for lambda invoking, this will only be available in the AWS RDS context since it requires an extension for lambda calling.
+    -   triggers: Triggers are applied to tables to determine Updates, Inserts and Deletes and what trigger function should be called when an operation happens for the specific table.
+
+    After the objects related are created, make sure to add them to the `propus/sql/calbright/alembic/env.py`.
+    
+    -- Include imports and register entities
+    ex.
+    ```
+    from propus.calbright_sql.replaceable_objects.trigger_functions import (
+        invoke_trigger_system_lambda,
+    )
+
+    from propus.calbright_sql.replaceable_objects.triggers import (
+        new_ccc_application_trigger,
+        new_enrollment_trigger,
+    )
+
+    from propus.calbright_sql.replaceable_objects.db_extensions import (
+        create_uuid_ossp,
+        create_aws_commons,
+        create_aws_lambda,
+        create_plpgsql,
+    )
+
+
+    def set_registered_entities():
+        """
+        Set register entities for non-local environments since the functions and extensions are meant for an RDS context
+        """
+        register_entities(
+            [
+                # PSQL Functions
+                invoke_trigger_system_lambda,
+                # PSQL Triggers
+                new_ccc_application_trigger,
+                new_enrollment_trigger,
+                # PSQL Extensions
+                create_uuid_ossp,
+                create_aws_commons,
+                create_aws_lambda,
+                create_plpgsql,
+            ]
+        )
+    ```
+
+2. Next create your revision file. If you use the `--autogenerate` flag it will determine what adjustments need to be made and pickup PG functions created in SQL. Without `--autogenerate`, you will need to manual add and configure what should be upgraded and downgraded
+    ```
+    alembic revision --autogenerate -m "some comment regarding the migration";    
+    ```
+
+3. Next update your newly generated file with upgrades and downgrades. If needed, point the downgrade to the previous version files:
+    ```
+    -- Setup file
+    revision = "<generated version>"
+    down_revision = "<previous version for downgrades>"
+
+    -- Include imports where needed
+    ex. 
+        from alembic import op
+        import sqlalchemy as sa
+
+    -- Function adjustments
+    def upgrade() -> None:
+        # what database table adjustments, additions, trigger creations, etc...need to be added
+        pass
+
+
+    def downgrade() -> None:
+        # what database table/trigger/column drops that need to be performed
+        pass
+    ```
+
+4. Run the migration script accordingly. If previous versions exist, it will look through all migration version files to determine database updates. Keep in mind that migration file clean ups should be performed to prevent delays in startup or outdated information.
+    ```
+    alembic upgrade head
+    ```
+
+## Additional Notes
+
+*For Migrations on Triggers* you need to add the environment in the invoking function if the trigger invokes lambdas. Then suggest incorperating the same env variables in the migration script so it can be built in prod and stage environments. Without this, it could call the wrong lambda and lead to unexpected errors or results.
+
+Migrations are handled by alembic and additional documentation can be found [here](https://alembic.sqlalchemy.org/en/latest/). For information regarding the Replaceable Objects, alembic_utils and how migrations work for Triggers, Extensions, etc...the can be found [here](https://alembic.sqlalchemy.org/en/latest/cookbook.html#replaceable-objects).
